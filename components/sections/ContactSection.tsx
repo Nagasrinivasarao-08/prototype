@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { COMPANY_INFO, OFFICE_LOCATIONS } from "@/data/companyData";
 import { Mail, Phone, MapPin, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
+import { AnimateIn, fadeUp, slideLeft, slideRight } from "@/components/ui/AnimateIn";
 
 const contactSchema = z.object({
   firstName: z.string().min(2, "First name is required"),
@@ -25,7 +26,7 @@ export function ContactSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           {/* Left Column */}
-          <div className="lg:col-span-5 space-y-8">
+          <AnimateIn variants={slideLeft} className="lg:col-span-5 space-y-8">
             <div className="space-y-4">
               <span className="text-xs font-sans uppercase font-semibold text-brand-600 tracking-wider block">
                 Start a Conversation
@@ -97,12 +98,12 @@ export function ContactSection() {
                 ))}
               </ul>
             </div>
-          </div>
+          </AnimateIn>
 
           {/* Right Column Form */}
-          <div className="lg:col-span-7 bg-white p-8 sm:p-10 rounded-xl border border-slate-200 shadow-sm">
+          <AnimateIn variants={slideRight} delay={0.15} className="lg:col-span-7 bg-white p-8 sm:p-10 rounded-xl border border-slate-200 shadow-sm">
             <ContactForm />
-          </div>
+          </AnimateIn>
         </div>
       </div>
     </section>

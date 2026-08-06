@@ -1,6 +1,8 @@
 "use client";
 
 import React from "react";
+import { motion } from "framer-motion";
+import { AnimateIn, AnimateStagger, AnimateStaggerItem, fadeUp } from "@/components/ui/AnimateIn";
 
 /* ── Project showcase data with real generated UI images ── */
 const SHOWCASES = [
@@ -81,7 +83,7 @@ export function PortfolioSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Centered header */}
-        <div className="text-center mb-14 space-y-4">
+        <AnimateIn variants={fadeUp} className="text-center mb-14 space-y-4">
           <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900">
             Our Works
           </h2>
@@ -89,11 +91,12 @@ export function PortfolioSection() {
             Still curious about us?{" "}
             <span className="text-brand-600 font-medium">Our work speaks for itself.</span>
           </p>
-        </div>
+        </AnimateIn>
 
         {/* 2-column showcase grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <AnimateStagger className="grid grid-cols-1 md:grid-cols-2 gap-8" staggerDelay={0.15}>
           {SHOWCASES.map((project) => (
+            <AnimateStaggerItem key={project.id} variants={fadeUp}>
             <div
               key={project.id}
               className={`relative rounded-3xl overflow-hidden bg-gradient-to-br ${project.bg} p-6 sm:p-8 lg:p-10 flex flex-col justify-between min-h-[420px] sm:min-h-[460px] group border border-slate-800/50 shadow-xl`}
@@ -120,8 +123,9 @@ export function PortfolioSection() {
                 </span>
               </div>
             </div>
+            </AnimateStaggerItem>
           ))}
-        </div>
+        </AnimateStagger>
 
       </div>
     </section>

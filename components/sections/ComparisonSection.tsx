@@ -1,5 +1,8 @@
+"use client";
+
 import React from "react";
 import { Check, X, Star } from "lucide-react";
+import { AnimateIn, fadeUp, scaleIn } from "@/components/ui/AnimateIn";
 
 const COMPARISON_ROWS = [
   {
@@ -40,14 +43,14 @@ export function ComparisonSection() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
+        <AnimateIn variants={fadeUp} className="text-center max-w-2xl mx-auto mb-16 space-y-4">
           <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900">
             What Makes Us Different
           </h2>
           <p className="text-base sm:text-lg text-slate-600 font-sans leading-relaxed">
             Why leading businesses choose Aspire over hiring in-house or outsourcing elsewhere.
           </p>
-        </div>
+        </AnimateIn>
 
         {/* Dashed separator */}
         <div className="flex justify-center mb-12">
@@ -55,7 +58,7 @@ export function ComparisonSection() {
         </div>
 
         {/* Comparison Table Container */}
-        <div className="bg-white rounded-3xl border border-slate-200/90 shadow-xl overflow-hidden">
+        <AnimateIn variants={scaleIn} delay={0.15} className="bg-white rounded-3xl border border-slate-200/90 shadow-xl overflow-hidden">
           
           {/* Table Header */}
           <div className="grid grid-cols-12 bg-slate-50/80 border-b border-slate-200 p-4 sm:p-6 items-center text-center font-display">
@@ -110,7 +113,7 @@ export function ComparisonSection() {
             ))}
           </div>
 
-        </div>
+        </AnimateIn>
 
       </div>
     </section>

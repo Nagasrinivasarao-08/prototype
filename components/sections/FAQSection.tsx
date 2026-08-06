@@ -2,6 +2,8 @@
 
 import React, { useState } from "react";
 import { ChevronDown, HelpCircle } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { AnimateIn, AnimateStagger, AnimateStaggerItem, fadeUp } from "@/components/ui/AnimateIn";
 
 const FAQS = [
   {
@@ -59,7 +61,7 @@ export function FAQSection() {
     <section id="faq" className="py-20 lg:py-28 bg-[#F5F5F7] text-slate-900">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
+        <AnimateIn variants={fadeUp} className="text-center max-w-2xl mx-auto mb-16 space-y-4">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900 text-white text-xs font-mono font-medium">
             <HelpCircle className="w-3.5 h-3.5" />
             <span>Got Questions?</span>
@@ -70,17 +72,17 @@ export function FAQSection() {
           <p className="text-base text-slate-600 font-sans leading-relaxed">
             Everything you need to know about our custom software development, CRM advisory, and long-term IT support.
           </p>
-        </div>
+        </AnimateIn>
 
         {/* Accessible Accordion */}
-        <div className="space-y-4">
+        <AnimateStagger className="space-y-4" staggerDelay={0.08}>
           {FAQS.map((faq) => {
             const isOpen = openId === faq.id;
             return (
-              <div
-                key={faq.id}
-                className="rounded-2xl bg-white border border-slate-200/80 overflow-hidden shadow-sm transition-all duration-200"
-              >
+              <AnimateStaggerItem key={faq.id} variants={fadeUp}>
+                <div
+                  className={`rounded-2xl bg-white border overflow-hidden shadow-sm transition-all duration-200 ${isOpen ? 'border-blue-200 shadow-md' : 'border-slate-200/80'}`}
+                >
                 <button
                   type="button"
                   onClick={() => toggle(faq.id)}
@@ -98,15 +100,28 @@ export function FAQSection() {
                   />
                 </button>
 
-                {isOpen && (
-                  <div id={`faq-answer-${faq.id}`} className="px-6 pb-6 pt-0 text-sm text-slate-600 font-sans leading-relaxed border-t border-slate-100">
-                    <p className="mt-4">{faq.answer}</p>
-                  </div>
-                )}
-              </div>
+                <AnimatePresence>
+                  {isOpen && (
+                    <motion.div
+                      id={`faq-answer-${faq.id}`}
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-6 pb-6 pt-0 text-sm text-slate-600 font-sans leading-relaxed border-t border-slate-100">
+                        <p className="mt-4">{faq.answer}</p>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                </div>
+              </AnimateStaggerItem>
             );
           })}
-        </div>
+        </AnimateStagger>
       </div>
     </section>
   );

@@ -1,6 +1,10 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
-import { ArrowRight, BookOpen } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
+import { AnimateIn, AnimateStagger, AnimateStaggerItem, fadeUp, slideLeft } from "@/components/ui/AnimateIn";
 
 const BLOGS = [
   {
@@ -31,7 +35,7 @@ export function InsightsSection() {
     <section id="insights" className="py-20 lg:py-28 bg-white text-slate-900 border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-6">
+        <AnimateIn variants={slideLeft} className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-6">
           <div className="max-w-2xl">
             <span className="text-xs font-mono uppercase font-semibold text-brand-600 tracking-wider block mb-2">
               Blogs & Insights
@@ -47,15 +51,17 @@ export function InsightsSection() {
             <span>View More</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
-        </div>
+        </AnimateIn>
 
         {/* 3 Articles Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <AnimateStagger className="grid grid-cols-1 md:grid-cols-3 gap-8" staggerDelay={0.1}>
           {BLOGS.map((art) => (
-            <div
-              key={art.id}
-              className="p-6 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col justify-between group hover:border-slate-300 hover:-translate-y-1 transition-all duration-200"
-            >
+            <AnimateStaggerItem key={art.id} variants={fadeUp}>
+              <motion.div
+                className="p-6 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col justify-between group h-full"
+                whileHover={{ y: -5, borderColor: "#94a3b8", boxShadow: "0 12px 32px -8px rgba(0,0,0,0.1)" }}
+                transition={{ type: "spring", stiffness: 280, damping: 22 }}
+              >
               <div>
                 <div className="flex items-center justify-between text-xs font-mono text-slate-500 mb-4">
                   <span className="px-2.5 py-0.5 rounded-full bg-white border border-slate-200 text-slate-700 font-medium">
@@ -77,9 +83,10 @@ export function InsightsSection() {
                 <span>Read Full Article</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
               </div>
-            </div>
+              </motion.div>
+            </AnimateStaggerItem>
           ))}
-        </div>
+        </AnimateStagger>
       </div>
     </section>
   );
