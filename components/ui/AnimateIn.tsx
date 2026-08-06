@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView, Variants } from "framer-motion";
+import { useRef, useEffect, useState } from "react";
+import { motion, useInView, animate, Variants } from "framer-motion";
 
 // ── Shared variants ─────────────────────────────────────────────────────────
 
@@ -30,20 +30,7 @@ export const slideRight: Variants = {
   visible: { opacity: 1, x: 0 },
 };
 
-/** Container that staggers children */
-export const staggerContainer: Variants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.05,
-    },
-  },
-};
-
-// ── AnimateIn ────────────────────────────────────────────────────────────────
-// Wraps any children with a scroll-triggered animation.
-// Usage: <AnimateIn variants={fadeUp}> ... </AnimateIn>
+// ── AnimateIn Component ──────────────────────────────────────────────────────
 
 interface AnimateInProps {
   children: React.ReactNode;
@@ -53,7 +40,6 @@ interface AnimateInProps {
   className?: string;
   once?: boolean;
   amount?: number;
-  as?: keyof JSX.IntrinsicElements;
 }
 
 export function AnimateIn({
@@ -82,12 +68,7 @@ export function AnimateIn({
   );
 }
 
-// ── AnimateStagger ───────────────────────────────────────────────────────────
-// Wraps a list — applies staggerContainer to the wrapper and fadeUp to each child.
-// Usage:
-//   <AnimateStagger className="grid grid-cols-3 gap-6">
-//     {items.map(i => <AnimateStaggerItem key={i.id}> ... </AnimateStaggerItem>)}
-//   </AnimateStagger>
+// ── AnimateStagger Component ──────────────────────────────────────────────────
 
 interface AnimateStaggerProps {
   children: React.ReactNode;
@@ -144,5 +125,173 @@ export function AnimateStaggerItem({
     >
       {children}
     </motion.div>
+  );
+}
+
+// ── CountUp Number Component ─────────────────────────────────────────────────
+// Counts from 0 up to `targetNumber` when scrolled into view.
+// E.g. <CountUp from={0} to={18} suffix="+" duration={2} />
+
+interface CountUpProps {
+  to: number;
+  from?: number;
+  suffix?: string;
+  prefix?: string;
+  duration?: number;
+  className?: string;
+}
+
+export function CountUp({
+  to,
+  from = 0,
+  suffix = "",
+  prefix = "",
+  duration = 2,
+  className = "",
+}: CountUpProps) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.5 });
+  const [displayValue, setDisplayValue] = useState(from);
+
+  useEffect(() => {
+    if (inView) {
+      const controls = animate(from, to, {
+        duration,
+        ease: [0.16, 1, 0.3, 1],
+        onUpdate(value) {
+          setDisplayValue(Math.floor(value));
+        },
+      });
+      return () => controls.stop();
+    }
+  }, [inView, from, to, duration]);
+
+  return (
+    <span ref={ref} className={className}>
+      {prefix}
+      {displayValue.toLocaleString()}
+      {suffix}
+    </span>
+  );
+}
+
+// ── FloatingElement Component ────────────────────────────────────────────────
+// Gives elements a subtle, continuous levitating animation.
+
+interface FloatingElementProps {
+  children: React.ReactNode;
+  duration?: number;
+  distance?: number;
+  delay?: number;
+  className?: string;
+}
+
+export function FloatingElement({
+  children,
+  duration = 4,
+  distance = 8,
+  delay = 0,
+  className = "",
+}: FloatingElementProps) {
+  return (
+    <motion.div
+      animate={{
+        y: [-distance / 2, distance / 2, -distance / 2],
+      }}
+      transition={{
+        duration,
+        repeat: Infinity,
+        repeatType: "mirror",
+        ease: "easeInOut",
+        delay,
+      }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+// ── GlowCard Component (Spotlight cursor hover effect) ─────────────────────
+
+interface GlowCardProps {
+  children: React.ReactNode;
+  className?: string;
+  glowColor?: string;
+}
+
+export function GlowCard({
+  children,
+  className = "",
+  glowColor = "rgba(59, 130, 246, 0.15)",
+}: GlowCardProps) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [cursor, setCursor] = useState({ x: -200, y: -200, opacity: 0 });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    setCursor({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+      opacity: 1,
+    });
+  };
+
+  const handleMouseLeave = () => {
+    setCursor((prev) => ({ ...prev, opacity: 0 }));
+  };
+
+  return (
+    <div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className={`relative overflow-hidden ${className}`}
+    >
+      <div
+        className="pointer-events-none absolute -inset-px transition-opacity duration-300 z-10 rounded-[inherit]"
+        style={{
+          opacity: cursor.opacity,
+          background: `radial-gradient(400px circle at ${cursor.x}px ${cursor.y}px, ${glowColor}, transparent 80%)`,
+        }}
+      />
+      {children}
+    </div>
+  );
+}
+
+// ── Infinite Marquee Component ─────────────────────────────────────────────
+
+interface MarqueeProps {
+  children: React.ReactNode;
+  speed?: number;
+  direction?: "left" | "right";
+  className?: string;
+}
+
+export function Marquee({
+  children,
+  speed = 25,
+  direction = "left",
+  className = "",
+}: MarqueeProps) {
+  return (
+    <div className={`overflow-hidden whitespace-nowrap flex ${className}`}>
+      <motion.div
+        animate={{
+          x: direction === "left" ? ["0%", "-50%"] : ["-50%", "0%"],
+        }}
+        transition={{
+          duration: speed,
+          repeat: Infinity,
+          ease: "linear",
+        }}
+        className="flex shrink-0 items-center gap-8 min-w-full"
+      >
+        {children}
+        {children}
+      </motion.div>
+    </div>
   );
 }
