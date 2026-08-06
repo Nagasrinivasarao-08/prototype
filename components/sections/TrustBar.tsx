@@ -1,5 +1,8 @@
+"use client";
+
 import React from "react";
-import { ShieldCheck, Award, Star, Cloud, Code2, CheckCircle2 } from "lucide-react";
+import { ShieldCheck, Cloud, Code2 } from "lucide-react";
+import { AnimateIn, AnimateStagger, AnimateStaggerItem, fadeUp, scaleIn } from "@/components/ui/AnimateIn";
 
 export function TrustBar() {
   const primaryPartnerships = [
@@ -20,32 +23,33 @@ export function TrustBar() {
     <section className="bg-white border-b border-slate-200 py-10 text-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          
+
           {/* Primary Certifications & Partnerships Group */}
           <div className="lg:col-span-7 space-y-4">
-            <h4 className="text-[10px] font-sans uppercase font-bold text-slate-400 tracking-wider">
-              Primary Certifications & Partnerships
-            </h4>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <AnimateIn variants={fadeUp} duration={0.4}>
+              <h4 className="text-[10px] font-sans uppercase font-bold text-slate-400 tracking-wider">
+                Primary Certifications &amp; Partnerships
+              </h4>
+            </AnimateIn>
+            <AnimateStagger className="grid grid-cols-1 sm:grid-cols-2 gap-3" staggerDelay={0.08}>
               {primaryPartnerships.map((partner, idx) => (
-                <div
-                  key={idx}
-                  className="flex items-center gap-3 p-3.5 rounded-lg bg-slate-50 border border-slate-200/60"
-                >
-                  <div className="p-2 rounded bg-white border border-slate-200 shadow-3xs">
-                    {partner.icon}
+                <AnimateStaggerItem key={idx} variants={fadeUp}>
+                  <div className="flex items-center gap-3 p-3.5 rounded-lg bg-slate-50 border border-slate-200/60 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
+                    <div className="p-2 rounded bg-white border border-slate-200 shadow-3xs">
+                      {partner.icon}
+                    </div>
+                    <div>
+                      <span className="text-xs font-sans font-bold text-slate-900 block leading-tight">
+                        {partner.name}
+                      </span>
+                      <span className="text-[10px] font-sans text-slate-500 block leading-tight mt-0.5">
+                        {partner.detail}
+                      </span>
+                    </div>
                   </div>
-                  <div>
-                    <span className="text-xs font-sans font-bold text-slate-900 block leading-tight">
-                      {partner.name}
-                    </span>
-                    <span className="text-[10px] font-sans text-slate-500 block leading-tight mt-0.5">
-                      {partner.detail}
-                    </span>
-                  </div>
-                </div>
+                </AnimateStaggerItem>
               ))}
-            </div>
+            </AnimateStagger>
           </div>
 
           {/* Divider on desktop */}
@@ -53,24 +57,25 @@ export function TrustBar() {
 
           {/* Industry Recognition Group */}
           <div className="lg:col-span-4 space-y-4">
-            <h4 className="text-[10px] font-sans uppercase font-bold text-slate-400 tracking-wider">
-              Industry Recognition
-            </h4>
-            <div className="grid grid-cols-2 gap-3">
+            <AnimateIn variants={fadeUp} duration={0.4} delay={0.15}>
+              <h4 className="text-[10px] font-sans uppercase font-bold text-slate-400 tracking-wider">
+                Industry Recognition
+              </h4>
+            </AnimateIn>
+            <AnimateStagger className="grid grid-cols-2 gap-3" staggerDelay={0.08}>
               {industryRecognition.map((item, idx) => (
-                <div
-                  key={idx}
-                  className="p-3 rounded-lg bg-white border border-slate-200/80 hover:border-slate-300 transition-colors shadow-4xs flex flex-col justify-between"
-                >
-                  <span className="text-xs font-sans font-bold text-slate-900 leading-tight">
-                    {item.name}
-                  </span>
-                  <span className="text-[10px] font-sans text-slate-500 leading-tight mt-1.5 block">
-                    {item.detail}
-                  </span>
-                </div>
+                <AnimateStaggerItem key={idx} variants={scaleIn}>
+                  <div className="p-3 rounded-lg bg-white border border-slate-200/80 hover:border-blue-200 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 shadow-4xs flex flex-col justify-between h-full cursor-default">
+                    <span className="text-xs font-sans font-bold text-slate-900 leading-tight">
+                      {item.name}
+                    </span>
+                    <span className="text-[10px] font-sans text-slate-500 leading-tight mt-1.5 block">
+                      {item.detail}
+                    </span>
+                  </div>
+                </AnimateStaggerItem>
               ))}
-            </div>
+            </AnimateStagger>
           </div>
 
         </div>
