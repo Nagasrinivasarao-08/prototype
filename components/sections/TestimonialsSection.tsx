@@ -3,6 +3,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { TESTIMONIALS_DATA } from "@/data/testimonialsData";
 import { TestimonialItem } from "@/types";
 import { Quote, Star } from "lucide-react";
+import { AnimateIn, AnimateStagger, AnimateStaggerItem, fadeUp } from "@/components/ui/AnimateIn";
 
 export function TestimonialsSection() {
   const featured = TESTIMONIALS_DATA[0]; // Remi Gangarossa
@@ -20,8 +21,9 @@ export function TestimonialsSection() {
 
         {/* Featured Testimonial Spotlight */}
         {featured && (
-          <div className="mb-12 p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 shadow-2xl relative">
-            <Quote className="w-12 h-12 text-signal-blue-500/20 absolute top-6 right-8 pointer-events-none" />
+          <AnimateIn variants={fadeUp}>
+            <div className="mb-12 p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 shadow-2xl relative">
+              <Quote className="w-12 h-12 text-signal-blue-500/20 absolute top-6 right-8 pointer-events-none" />
 
             <div className="flex items-center gap-1 mb-6 text-amber-400">
               {[...Array(featured.rating)].map((_, i) => (
@@ -40,19 +42,22 @@ export function TestimonialsSection() {
                   {featured.title} · <strong className="text-slate-300 font-sans">{featured.company}</strong>
                 </div>
               </div>
-              <span className="px-3 py-1 text-xs font-mono bg-slate-800 text-slate-300 rounded-full border border-slate-700">
-                2+ Years Partnership
-              </span>
+                <span className="px-3 py-1 text-xs font-mono bg-slate-800 text-slate-300 rounded-full border border-slate-700">
+                  2+ Years Partnership
+                </span>
+              </div>
             </div>
-          </div>
+          </AnimateIn>
         )}
 
         {/* Secondary Testimonials */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <AnimateStagger className="grid grid-cols-1 md:grid-cols-2 gap-8" staggerDelay={0.1}>
           {secondary.map((item) => (
-            <TestimonialCard key={item.id} item={item} />
+            <AnimateStaggerItem key={item.id} variants={fadeUp}>
+              <TestimonialCard item={item} />
+            </AnimateStaggerItem>
           ))}
-        </div>
+        </AnimateStagger>
       </div>
     </section>
   );

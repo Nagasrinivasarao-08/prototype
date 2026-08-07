@@ -1,13 +1,14 @@
 import React from "react";
 import { TECH_CAPABILITIES_DATA } from "@/data/techData";
 import { Code2 } from "lucide-react";
+import { AnimateIn, AnimateStagger, AnimateStaggerItem, fadeUp } from "@/components/ui/AnimateIn";
 
 export function TechCapabilities() {
   return (
     <section id="technology" className="py-20 lg:py-28 bg-[#FAFAFA] text-slate-900 border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="max-w-3xl mb-16">
+        <AnimateIn variants={fadeUp} className="max-w-3xl mb-16">
           <span className="text-xs font-sans uppercase font-semibold text-brand-600 tracking-wider block mb-2">
             Technology Stack
           </span>
@@ -17,12 +18,13 @@ export function TechCapabilities() {
           <p className="mt-4 text-base sm:text-lg text-slate-600 font-sans leading-relaxed">
             Our engineering teams specialize in enterprise software frameworks across Microsoft .NET, Salesforce Apex/LWC, web, mobile, and cloud environments.
           </p>
-        </div>
+        </AnimateIn>
 
         {/* Technology Index Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <AnimateStagger className="grid grid-cols-1 md:grid-cols-2 gap-8" staggerDelay={0.1}>
           {TECH_CAPABILITIES_DATA.map((cat, idx) => (
-            <div key={idx} className="p-8 rounded-xl bg-white border border-slate-200 flex flex-col justify-between">
+            <AnimateStaggerItem key={idx} variants={fadeUp}>
+            <div className="p-8 rounded-xl bg-white border border-slate-200 flex flex-col justify-between h-full">
               <div>
                 <div className="flex items-center gap-2.5 mb-4 pb-3 border-b border-slate-100">
                   <Code2 className="w-5 h-5 text-brand-600 shrink-0" />
@@ -45,8 +47,9 @@ export function TechCapabilities() {
                 Verified Production Expertise
               </div>
             </div>
+            </AnimateStaggerItem>
           ))}
-        </div>
+        </AnimateStagger>
       </div>
     </section>
   );

@@ -1,12 +1,13 @@
 import React from "react";
 import { PROCESS_STEPS } from "@/data/processData";
+import { AnimateIn, AnimateStagger, AnimateStaggerItem, fadeUp } from "@/components/ui/AnimateIn";
 
 export function ProcessSection() {
   return (
     <section id="process" className="py-20 lg:py-28 bg-white text-slate-900 border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="max-w-3xl mb-16">
+        <AnimateIn variants={fadeUp} className="max-w-3xl mb-16">
           <span className="text-xs font-sans uppercase font-semibold text-slate-500 tracking-wider block mb-2">
             Delivery Methodology
           </span>
@@ -16,14 +17,14 @@ export function ProcessSection() {
           <p className="mt-4 text-base sm:text-lg text-slate-600 font-sans leading-relaxed">
             From initial architectural discovery to ongoing production scaling, our transparent process ensures predictable milestones and zero budget surprises.
           </p>
-        </div>
+        </AnimateIn>
 
         {/* 4 Process Steps Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+        <AnimateStagger className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8" staggerDelay={0.1}>
           {PROCESS_STEPS.map((step, idx) => (
+            <AnimateStaggerItem key={step.number} variants={fadeUp}>
             <div
-              key={step.number}
-              className="p-6 sm:p-8 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between"
+              className="p-6 sm:p-8 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between h-full"
             >
               <div>
                 <div className="flex items-center justify-between mb-4">
@@ -49,8 +50,9 @@ export function ProcessSection() {
                 Delivery Protocol v4.2
               </div>
             </div>
+            </AnimateStaggerItem>
           ))}
-        </div>
+        </AnimateStagger>
       </div>
     </section>
   );

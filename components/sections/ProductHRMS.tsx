@@ -1,6 +1,7 @@
 import React from "react";
 import { ASC_HRMS_DATA } from "@/data/productData";
 import { Check, ArrowRight, Layers, Zap } from "lucide-react";
+import { AnimateIn, slideLeft, slideRight } from "@/components/ui/AnimateIn";
 
 export function ProductHRMS() {
   return (
@@ -9,7 +10,7 @@ export function ProductHRMS() {
         <div className="p-8 sm:p-12 lg:p-14 rounded-2xl bg-slate-900 text-white shadow-xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             {/* Left Content */}
-            <div className="lg:col-span-6 space-y-6">
+            <AnimateIn variants={slideLeft} className="lg:col-span-6 space-y-6">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-400/30 text-blue-400 text-xs font-mono font-medium">
                 <Layers className="w-4 h-4 text-blue-400" />
                 <span>Featured Solution · ASC HRMS Enterprise</span>
@@ -55,10 +56,10 @@ export function ProductHRMS() {
                   <span>One-Time Licensing Model</span>
                 </a>
               </div>
-            </div>
+            </AnimateIn>
 
             {/* Right Software Mockup Showcase */}
-            <div className="lg:col-span-6 space-y-4">
+            <AnimateIn variants={slideRight} delay={0.2} className="lg:col-span-6 space-y-4">
               <div className="rounded-xl overflow-hidden border border-slate-700 shadow-2xl bg-slate-950">
                 {/* Browser top chrome */}
                 <div className="h-7 bg-slate-800 px-3 flex items-center gap-2 border-b border-slate-700">
@@ -84,7 +85,7 @@ export function ProductHRMS() {
                   <span>Zero Monthly Licensing Fees</span>
                 </div>
               </div>
-            </div>
+            </AnimateIn>
           </div>
         </div>
       </div>

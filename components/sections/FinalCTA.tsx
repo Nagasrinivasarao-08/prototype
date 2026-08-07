@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "@/components/ui/Button";
 import { ArrowRight, MessageSquare, ShieldCheck } from "lucide-react";
+import { AnimateIn, fadeUp } from "@/components/ui/AnimateIn";
 
 export function FinalCTA() {
   return (
@@ -8,7 +9,7 @@ export function FinalCTA() {
       {/* Background Accent */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-signal-blue-600/10 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 space-y-6">
+      <AnimateIn variants={fadeUp} className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 space-y-6">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-signal-blue-500/10 border border-signal-blue-500/30 text-signal-blue-400 text-xs font-mono font-semibold uppercase tracking-wider">
           <ShieldCheck className="w-4 h-4" />
           Senior Engineering Advisory
@@ -45,7 +46,7 @@ export function FinalCTA() {
         <div className="pt-6 text-xs font-mono text-slate-400">
           Direct Access to Principal Consultants · Non-Disclosure Assured · Response Within 1 Business Day
         </div>
-      </div>
+      </AnimateIn>
     </section>
   );
 }

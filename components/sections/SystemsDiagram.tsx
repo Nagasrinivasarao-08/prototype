@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { Sparkles, Building2, Globe, Cloud, Database, Cpu, CheckCircle2 } from "lucide-react";
+import { AnimateIn, fadeUp } from "@/components/ui/AnimateIn";
 
 interface NodeData {
   id: string;
@@ -65,7 +66,7 @@ export function SystemsDiagram() {
   const [activeNode, setActiveNode] = useState<string | null>("ai");
 
   return (
-    <div className="relative w-full aspect-[4/3] max-w-lg mx-auto bg-slate-950/80 rounded-2xl border border-slate-800 p-4 shadow-2xl overflow-hidden group">
+    <AnimateIn variants={fadeUp} className="relative w-full aspect-[4/3] max-w-lg mx-auto bg-slate-950/80 rounded-2xl border border-slate-800 p-4 shadow-2xl overflow-hidden group">
       {/* Background Grid Pattern */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:24px_24px] opacity-30" />
 
@@ -165,6 +166,6 @@ export function SystemsDiagram() {
         </div>
         <span className="text-[10px] font-mono text-signal-blue-400">18+ Yrs Proven</span>
       </div>
-    </div>
+    </AnimateIn>
   );
 }

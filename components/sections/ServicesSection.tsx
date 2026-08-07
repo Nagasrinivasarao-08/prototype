@@ -3,23 +3,25 @@ import Link from "next/link";
 import { SERVICES_GROUPED_DATA } from "@/data/servicesData";
 import { ServiceItem } from "@/types";
 import { Sparkles, ArrowRight, CheckCircle2 } from "lucide-react";
+import { AnimateIn, AnimateStagger, AnimateStaggerItem, fadeUp } from "@/components/ui/AnimateIn";
 
 export function ServicesSection() {
   return (
     <section id="services" className="py-20 lg:py-28 bg-[#FAFAFA] text-slate-900 border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mb-16">
+        <AnimateIn variants={fadeUp} className="max-w-3xl mb-16">
           <span className="text-xs font-sans uppercase font-semibold text-brand-600 tracking-wider block mb-2">
             Service Portfolio
           </span>
           <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900">
             Comprehensive software engineering capabilities.
           </h2>
-        </div>
+        </AnimateIn>
 
-        <div className="space-y-12">
+        <AnimateStagger className="space-y-12" staggerDelay={0.1}>
           {SERVICES_GROUPED_DATA.map((group) => (
-            <div key={group.id} className="p-8 rounded-xl bg-white border border-slate-200">
+            <AnimateStaggerItem key={group.id} variants={fadeUp}>
+            <div className="p-8 rounded-xl bg-white border border-slate-200">
               <h3 className="font-display text-2xl font-bold text-slate-900 mb-2">
                 {group.categoryName}
               </h3>
@@ -41,8 +43,9 @@ export function ServicesSection() {
                 ))}
               </div>
             </div>
+            </AnimateStaggerItem>
           ))}
-        </div>
+        </AnimateStagger>
       </div>
     </section>
   );

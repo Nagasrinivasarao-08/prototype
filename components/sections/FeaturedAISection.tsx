@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "@/components/ui/Button";
 import { Sparkles, Bot, FileText, Cpu, ArrowRight, CheckCircle2 } from "lucide-react";
+import { AnimateIn, fadeUp, slideLeft, slideRight } from "@/components/ui/AnimateIn";
 
 export function FeaturedAISection() {
   return (
@@ -13,7 +14,7 @@ export function FeaturedAISection() {
         <div className="p-8 sm:p-12 lg:p-16 rounded-3xl bg-gradient-to-br from-slate-900 via-slate-900/90 to-slate-950 border border-slate-800 shadow-2xl relative">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             {/* Left Content */}
-            <div className="lg:col-span-7 space-y-6">
+            <AnimateIn variants={slideLeft} className="lg:col-span-7 space-y-6">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-mono font-semibold uppercase tracking-wider">
                 <Sparkles className="w-3.5 h-3.5" />
                 Featured Capability · Practical Enterprise AI
@@ -72,10 +73,10 @@ export function FeaturedAISection() {
                   Discuss an AI Opportunity
                 </Button>
               </div>
-            </div>
+            </AnimateIn>
 
             {/* Right Interactive Card Frame */}
-            <div className="lg:col-span-5 bg-slate-950 p-6 sm:p-8 rounded-2xl border border-slate-800 space-y-6">
+            <AnimateIn variants={slideRight} delay={0.2} className="lg:col-span-5 bg-slate-950 p-6 sm:p-8 rounded-2xl border border-slate-800 space-y-6">
               <div className="flex items-center justify-between pb-4 border-b border-slate-800">
                 <span className="text-xs font-mono text-slate-400">AI Automation Workflow</span>
                 <span className="text-[10px] font-mono bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded">ACTIVE</span>
@@ -100,7 +101,7 @@ export function FeaturedAISection() {
                   ⚡ Reduced processing turnaround by <strong className="text-white">85%</strong> for enterprise operations.
                 </p>
               </div>
-            </div>
+            </AnimateIn>
           </div>
         </div>
       </div>
